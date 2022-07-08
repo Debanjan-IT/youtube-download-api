@@ -26,7 +26,7 @@ const init = async () => {
       try {
         const websiteUrl = 'https://www.y2mate.com/en373'
         const url = request.query.video_url;
-        const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox","--disable-notifications"] });
+        const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox"] });
         const page = await browser.newPage();
         await page.goto(websiteUrl);
         await page.focus('#txt-url')
