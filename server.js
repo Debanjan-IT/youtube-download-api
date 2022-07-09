@@ -10,14 +10,13 @@ const init = async () => {
 
   const server = Hapi.server({
     port: process.env.PORT || 3007,
-    host: 'localhost',
+    routes: {
+      cors: true,
+    }
   });
   server.route({
     method: 'GET',
     path: '/',
-    options: {
-      cors: true,
-    },
     handler: async (request, h) => {
       return `
         <h1>Youtube Downloader</h1>
