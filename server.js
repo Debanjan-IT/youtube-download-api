@@ -77,9 +77,10 @@ const init = async () => {
             }
             data.push(returnVal)
         }
-        await browser.close()
-        const links = await Promise.all(data)
-        return ({title, thumbnail, links})(h)
+        await browser.close().then(() => {
+          const links = await Promise.all(data)
+          return ({title, thumbnail, links})(h)
+        })
       } catch (error) {
         console.log(error);
       }
