@@ -15,7 +15,9 @@ const init = async () => {
   server.route({
     method: 'GET',
     path: '/',
-    cors: true,
+    options: {
+      cors: true,
+    },
     handler: async (request, h) => {
       return `
         <h1>Youtube Downloader</h1>
