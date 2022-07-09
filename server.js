@@ -38,7 +38,7 @@ const init = async () => {
       try {
         const websiteUrl = 'https://www.y2mate.com/en373'
         const url = request.query.video_url;
-        const browser = await puppeteer.launch({ignoreDefaultArgs: ['--disable-extensions'], headless: true, args: ["--no-sandbox", "--disable-notifications"] });
+        const browser = await puppeteer.launch({ignoreDefaultArgs: ['--disable-extensions'], headless: false, args: ["--no-sandbox", "--disable-notifications"] });
         const page = await browser.newPage();
         await page.goto(websiteUrl);
         await page.focus('#txt-url')
@@ -79,11 +79,10 @@ const init = async () => {
           data.push(returnVal)
           console.log('data pushed');
         }
-        await browser.close().then(async () => {
-          console.log('data returned');
-          const links = await Promise.all(data)
-          return { title, thumbnail, links }
-        })
+        await browser.close()
+        console.log('data returned');
+        const links = await Promise.all(data)
+        return { title, thumbnail, links }
       } catch (error) {
         console.log(error);
       }
