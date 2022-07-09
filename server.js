@@ -41,7 +41,7 @@ const init = async () => {
         const browser = await puppeteer.launch({ignoreDefaultArgs: ['--disable-extensions'], headless: true, args: ["--no-sandbox", "--disable-notifications"] });
         const page = await browser.newPage();
         await page.goto(websiteUrl);
-        await page.waitForSelector('#txt-url')
+        // await page.waitForSelector('#txt-url')
         await page.evaluate((url) => {
           const Turl = document.querySelector('#txt-url');
           Turl.value = url;
@@ -66,7 +66,7 @@ const init = async () => {
           await page.waitForSelector('#mp4 > table > tbody > tr')
           const page1 = await browser.newPage();
           await page1.goto(websiteUrl);
-          await page1.waitForSelector('#txt-url')
+          // await page1.waitForSelector('#txt-url')
           await page1.evaluate((url) => {
             const Turl = document.querySelector('#txt-url');
             Turl.value = url;
