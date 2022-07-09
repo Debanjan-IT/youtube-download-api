@@ -78,7 +78,7 @@ const init = async () => {
             data.push(returnVal)
             console.log('data pushed');
         }
-        await browser.close().then(() => {
+        await browser.close().then(async () => {
           console.log('data returned');
           const links = await Promise.all(data)
           return ({title, thumbnail, links})(h)
