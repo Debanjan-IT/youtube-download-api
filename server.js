@@ -76,8 +76,10 @@ const init = async () => {
                 link: await page1.evaluate(el => el.href, link)
             }
             data.push(returnVal)
+            console.log('data pushed');
         }
         await browser.close().then(() => {
+          console.log('data returned');
           const links = await Promise.all(data)
           return ({title, thumbnail, links})(h)
         })
