@@ -2,13 +2,14 @@
 
 const Hapi = require('@hapi/hapi');
 const Joi = require('joi');
+require("dotenv/config")
 
 const puppeteer = require("puppeteer");
 
 const init = async () => {
 
   const server = Hapi.server({
-    port: 3007,
+    port: process.env.PORT || 3007,
     host: 'localhost'
   });
   server.route({
@@ -35,7 +36,7 @@ const init = async () => {
       try {
         const websiteUrl = 'https://www.y2mate.com/en373'
         const url = request.query.video_url;
-        const browser = await puppeteer.launch({ headless: true, args: ["--disable-notifications"] });
+        const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox","--disable-notifications"] });
         const page = await browser.newPage();
         await page.goto(websiteUrl);
         await page.focus('#txt-url')
