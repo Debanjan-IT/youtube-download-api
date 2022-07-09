@@ -38,11 +38,14 @@ const init = async () => {
       try {
         const websiteUrl = 'https://www.y2mate.com/en373'
         const url = request.query.video_url;
-        const browser = await puppeteer.launch({ignoreDefaultArgs: ['--disable-extensions'], headless: true, args: ["--no-sandbox", "--disable-notifications"] });
+        const browser = await puppeteer.launch({ignoreDefaultArgs: ['--disable-extensions'], headless: false, args: ["--no-sandbox", "--disable-notifications"] });
         const page = await browser.newPage();
         await page.goto(websiteUrl);
-        await page.focus('#txt-url')
-        await page.keyboard.type(url)
+        await page.waitForSelector('#txt-url')
+        await page.evaluate((url) => {
+          const Turl = document.querySelector('#txt-url');
+          Turl.value = url;
+        }, url);
         await page.click("#btn-submit")
         await page.waitForSelector('#result > div > div.col-xs-12.col-sm-5.col-md-5 > div.thumbnail.cover > a > img')
         let thumbnail = (await page.$('#result > div > div.col-xs-12.col-sm-5.col-md-5 > div.thumbnail.cover > a > img'))
@@ -55,7 +58,6 @@ const init = async () => {
         const numberRows = (await page.$$('#mp4 > table > tbody > tr')).length
         let data = []
         for (let index = 1; index <= numberRows; index++) {
-          console.log('loop started');
           await page.waitForSelector(`#mp4 > table > tbody > tr:nth-child(${index}) > td:nth-child(1) > a`)
           let element1 = await page.$(`#mp4 > table > tbody > tr:nth-child(${index}) > td:nth-child(1) > a`)
           await page.waitForSelector('#mp4 > table > tbody > tr')
@@ -64,8 +66,11 @@ const init = async () => {
           await page.waitForSelector('#mp4 > table > tbody > tr')
           const page1 = await browser.newPage();
           await page1.goto(websiteUrl);
-          await page1.focus('#txt-url')
-          await page1.keyboard.type(url)
+          await page1.waitForSelector('#txt-url')
+          await page1.evaluate((url) => {
+            const Turl = document.querySelector('#txt-url');
+            Turl.value = url;
+          }, url);
           await page1.click("#btn-submit")
           await page1.waitForSelector(`#mp4 > table > tbody > tr:nth-child(${index}) > td.txt-center > a`)
           await page1.click(`#mp4 > table > tbody > tr:nth-child(${index}) > td.txt-center > a`)
@@ -77,10 +82,8 @@ const init = async () => {
             link: await page1.evaluate(el => el.href, link)
           }
           data.push(returnVal)
-          console.log('data pushed');
         }
         await browser.close()
-        console.log('data returned');
         const links = await Promise.all(data)
         return { title, thumbnail, links }
       } catch (error) {
