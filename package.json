@@ -4,6 +4,9 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
+    "@hapi/hapi": "20.2.2",
+    "dotenv": "^16.0.1",
+    "joi": "^17.6.0",
     "puppeteer": "^15.3.2"
   },
   "devDependencies": {},
