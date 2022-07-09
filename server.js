@@ -2,13 +2,14 @@
 
 const Hapi = require('@hapi/hapi');
 const Joi = require('joi');
+require('dotenv/config')
 
 const puppeteer = require("puppeteer");
 
 const init = async () => {
 
   const server = Hapi.server({
-    port: 3007,
+    port: process.env.PORT || 3007,
     host: 'localhost'
   });
 
