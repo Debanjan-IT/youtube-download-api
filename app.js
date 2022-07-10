@@ -21,6 +21,7 @@ app.get('/api/get-link', async (req, res) => {
                 "--no-zygote"
             ],
         });
+        console.log(websiteUrl);
         const page = await browser.newPage();
         await page.goto(websiteUrl, {
             waitUntil: 'networkidle2'
