@@ -12,7 +12,7 @@ app.get('/api/get-link', async (req, res) => {
         const result = await queryValidator.validateAsync(req.query)
         const websiteUrl = `https://www.y2mate.com/youtube/${result.video_url.split('=')[1]}`
         const browser = await puppeteer.launch({
-            headless: true,
+            headless: false,
             args: [
                 "--disable-notifications",
                 "--no-sandbox",
@@ -23,9 +23,7 @@ app.get('/api/get-link', async (req, res) => {
         });
         console.log(websiteUrl);
         const page = await browser.newPage();
-        await page.goto(websiteUrl, {
-            waitUntil: 'networkidle2'
-        });
+        await page.goto(websiteUrl, {timeout: 60000, waitUntil: 'domcontentloaded'});
         console.log("gone to website");
         await page.waitForSelector(`#mp4`)
         console.log(1);
@@ -39,7 +37,7 @@ app.get('/api/get-link', async (req, res) => {
             link: await page.evaluate(el => el.href, link)
         }
         console.log("data fetched");
-        await browser.close()
+        // await browser.close()
         res.send(returnVal)
     } catch (error) {
         console.log(error);
