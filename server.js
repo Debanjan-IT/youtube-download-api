@@ -43,6 +43,7 @@ const init = async () => {
         await page.goto(websiteUrl, {
           waitUntil: 'networkidle2'
         });
+        console.log("opened")
         await page.waitForSelector('#txt-url')
         await page.evaluate((url) => {
           const Turl = document.querySelector('#txt-url');
