@@ -25,30 +25,15 @@ app.get('/api/get-link', async (req, res) => {
         await page.goto(websiteUrl, {
             waitUntil: 'networkidle2'
         });
-        await page.waitForSelector("#result > div > div.col-xs-12.col-sm-5.col-md-5 > div.thumbnail.cover > div > b")
-        let title = (await page.$('#result > div > div.col-xs-12.col-sm-5.col-md-5 > div.thumbnail.cover > div > b'))
-        title = title ? await page.evaluate(el => el.innerText, title) : ''
-        await page.waitForSelector(`#mp4 > table > tbody > tr:nth-child(1) > td:nth-child(1) > a`)
-        let element1 = await page.$(`#mp4 > table > tbody > tr:nth-child(1) > td:nth-child(1) > a`)
-        await page.waitForSelector('#mp4 > table > tbody > tr')
-        await page.waitForSelector(`#mp4 > table > tbody > tr:nth-child(1) > td:nth-child(2)`)
-        let element2 = await page.$(`#mp4 > table > tbody > tr:nth-child(1) > td:nth-child(2)`)
-        await page.waitForSelector('#mp4 > table > tbody > tr')
-        const page1 = await browser.newPage();
-        await page1.goto(websiteUrl, {
-            waitUntil: 'networkidle2'
-        });
-        await page1.waitForSelector(`#mp4 > table > tbody > tr:nth-child(1) > td.txt-center > a`)
-        await page1.click(`#mp4 > table > tbody > tr:nth-child(1) > td.txt-center > a`)
-        await page1.waitForSelector("#process-result > div > a")
-        let link = await page1.$("#process-result > div > a")
+        await page.waitForSelector(`#mp4 > table > tbody > tr:nth-child(1) > td.txt-center > a`)
+        await page.click(`#mp4 > table > tbody > tr:nth-child(1) > td.txt-center > a`)
+        await page.waitForSelector("#process-result > div > a")
+        let link = await page.$("#process-result > div > a")
         let returnVal = {
-            format: await page.evaluate(el => el.textContent, element1),
-            size: await page.evaluate(el => el.textContent, element2),
-            link: await page1.evaluate(el => el.href, link)
+            link: await page.evaluate(el => el.href, link)
         }
         await browser.close()
-        res.send({ title, returnVal })
+        res.send(returnVal)
     } catch (error) {
         console.log(error);
     }
