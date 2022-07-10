@@ -36,6 +36,7 @@ const init = async () => {
     },
     handler: async (request, h) => {
       try {
+        console.log(request.query);
         const websiteUrl = 'https://www.y2mate.com/en373'
         const url = request.query.video_url;
         const browser = await puppeteer.launch({ignoreDefaultArgs: ['--disable-extensions'], headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"] });
@@ -89,12 +90,6 @@ const init = async () => {
         console.log(error);
       }
     }
-  });
-
-  server.events.on('response', function (request) {
-    console.log("request payload: ", request.payload)
-    console.log("request query: ", request.query);
-    console.log(request.info.remoteAddress + ': ' + request.method.toUpperCase() + ' ' + request.path + ' --> ' + request.response.statusCode);
   });
 
   await server.start();
