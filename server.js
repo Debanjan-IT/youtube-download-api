@@ -40,7 +40,9 @@ const init = async () => {
         const url = request.query.video_url;
         const browser = await puppeteer.launch({ignoreDefaultArgs: ['--disable-extensions'], headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"] });
         const page = await browser.newPage();
-        await page.goto(websiteUrl);
+        await page.goto(websiteUrl, {
+          waitUntil: 'networkidle2'
+        });
         // await page.waitForSelector('#txt-url')
         await page.evaluate((url) => {
           const Turl = document.querySelector('#txt-url');
@@ -65,7 +67,9 @@ const init = async () => {
           let element2 = await page.$(`#mp4 > table > tbody > tr:nth-child(${index}) > td:nth-child(2)`)
           await page.waitForSelector('#mp4 > table > tbody > tr')
           const page1 = await browser.newPage();
-          await page1.goto(websiteUrl);
+          await page1.goto(websiteUrl, {
+            waitUntil: 'networkidle2'
+          });
           // await page1.waitForSelector('#txt-url')
           await page1.evaluate((url) => {
             const Turl = document.querySelector('#txt-url');
