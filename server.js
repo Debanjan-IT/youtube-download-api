@@ -45,6 +45,7 @@ const init = async () => {
           waitUntil: 'networkidle2'
         });
         console.log("opened")
+        console.log(await page.$('#txt-url'))
         await page.focus('#txt-url')
         await page.keyboard.type('#txt-url', url)
         await page.click("#btn-submit")
