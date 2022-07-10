@@ -18,7 +18,7 @@ app.get('/api/get-link', async (req, res) => {
                 "--no-sandbox",
                 "--disable-setuid-sandbox",
                 "--single-process",
-                "--no-zygote",
+                "--no-zygote"
             ],
         });
         const page = await browser.newPage();
