@@ -26,13 +26,19 @@ app.get('/api/get-link', async (req, res) => {
         await page.goto(websiteUrl, {
             waitUntil: 'networkidle2'
         });
+        console.log("gone to website");
         await page.waitForSelector(`#mp4 > table > tbody > tr:nth-child(1) > td.txt-center > a`)
+        console.log(1);
         await page.click(`#mp4 > table > tbody > tr:nth-child(1) > td.txt-center > a`)
+        console.log(2);
         await page.waitForSelector("#process-result > div > a")
+        console.log(3);
         let link = await page.$("#process-result > div > a")
+        console.log(4);
         let returnVal = {
             link: await page.evaluate(el => el.href, link)
         }
+        console.log("data fetched");
         await browser.close()
         res.send(returnVal)
     } catch (error) {
