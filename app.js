@@ -12,6 +12,7 @@ app.get('/api/get-link', async (req, res) => {
         const result = await queryValidator.validateAsync(req.query)
         const websiteUrl = `https://www.y2mate.com/youtube/${result.video_url.split('=')[1]}`
         const browser = await puppeteer.launch({
+            ignoreDefaultArgs: ['--disable-extensions'],
             headless: true,
             args: [
                 "--disable-notifications",
