@@ -27,7 +27,7 @@ app.get('/api/get-link', async (req, res) => {
             waitUntil: 'networkidle2'
         });
         console.log("gone to website");
-        await page.waitForSelector(`#mp4 > table > tbody > tr:nth-child(1) > td.txt-center > a`)
+        await page.waitForSelector(`#mp4`)
         console.log(1);
         await page.click(`#mp4 > table > tbody > tr:nth-child(1) > td.txt-center > a`)
         console.log(2);
