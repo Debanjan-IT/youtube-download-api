@@ -39,7 +39,16 @@ const init = async () => {
         console.log(request.query);
         const websiteUrl = 'https://www.y2mate.com/en373'
         const url = request.query.video_url;
-        const browser = await puppeteer.launch({ignoreDefaultArgs: ['--disable-extensions'], headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"] });
+        const browser = await puppeteer.launch({
+          timeout: 0,
+          headless: true,
+          args: [
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
+            "--single-process",
+            "--no-zygote",
+          ],
+        });
         const page = await browser.newPage();
         await page.goto(websiteUrl, {
           waitUntil: 'networkidle2'
