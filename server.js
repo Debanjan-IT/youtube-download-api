@@ -98,7 +98,7 @@ const init = async () => {
   });
 
   server.events.on('response', function (request) {
-    console.log("request payload: ", request.payload)
+    console.log("request payload: ", request.payload || request.query)
     console.log(request.info.remoteAddress + ': ' + request.method.toUpperCase() + ' ' + request.path + ' --> ' + request.response.statusCode);
   });
 
