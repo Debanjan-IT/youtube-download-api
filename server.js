@@ -44,11 +44,8 @@ const init = async () => {
           waitUntil: 'networkidle2'
         });
         console.log("opened")
-        await page.waitForSelector('#txt-url')
-        await page.evaluate((url) => {
-          const Turl = document.querySelector('#txt-url');
-          Turl.value = url;
-        }, url);
+        await page.focus('#txt-url')
+        await page.keyboard.type('#txt-url', url)
         await page.click("#btn-submit")
         await page.waitForSelector('#result > div > div.col-xs-12.col-sm-5.col-md-5 > div.thumbnail.cover > a > img')
         let thumbnail = (await page.$('#result > div > div.col-xs-12.col-sm-5.col-md-5 > div.thumbnail.cover > a > img'))
@@ -71,11 +68,8 @@ const init = async () => {
           await page1.goto(websiteUrl, {
             waitUntil: 'networkidle2'
           });
-          await page1.waitForSelector('#txt-url')
-          await page1.evaluate((url) => {
-            const Turl = document.querySelector('#txt-url');
-            Turl.value = url;
-          }, url);
+          await page1.focus('#txt-url')
+          await page1.keyboard.type('#txt-url', url)
           await page1.click("#btn-submit")
           await page1.waitForSelector(`#mp4 > table > tbody > tr:nth-child(${index}) > td.txt-center > a`)
           await page1.click(`#mp4 > table > tbody > tr:nth-child(${index}) > td.txt-center > a`)
@@ -98,7 +92,8 @@ const init = async () => {
   });
 
   server.events.on('response', function (request) {
-    console.log("request payload: ", request.payload || request.query)
+    console.log("request payload: ", request.payload)
+    console.log("request query: ", request.query);
     console.log(request.info.remoteAddress + ': ' + request.method.toUpperCase() + ' ' + request.path + ' --> ' + request.response.statusCode);
   });
 
