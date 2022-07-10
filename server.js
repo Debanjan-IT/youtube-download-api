@@ -43,7 +43,7 @@ const init = async () => {
         await page.goto(websiteUrl, {
           waitUntil: 'networkidle2'
         });
-        // await page.waitForSelector('#txt-url')
+        await page.waitForSelector('#txt-url')
         await page.evaluate((url) => {
           const Turl = document.querySelector('#txt-url');
           Turl.value = url;
@@ -70,7 +70,7 @@ const init = async () => {
           await page1.goto(websiteUrl, {
             waitUntil: 'networkidle2'
           });
-          // await page1.waitForSelector('#txt-url')
+          await page1.waitForSelector('#txt-url')
           await page1.evaluate((url) => {
             const Turl = document.querySelector('#txt-url');
             Turl.value = url;
