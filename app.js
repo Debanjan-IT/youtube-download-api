@@ -24,7 +24,7 @@ app.get('/api/get-link', async (req, res) => {
         });
         console.log(websiteUrl);
         const page = await browser.newPage();
-        await page.goto(websiteUrl, {timeout: 60000, waitUntil: 'domcontentloaded'});
+        await page.goto(websiteUrl, {waitUntil: 'load'});
         console.log("gone to website");
         await page.waitForSelector(`#mp4`)
         console.log(1);
